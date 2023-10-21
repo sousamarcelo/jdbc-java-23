@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import db.DB;
 
@@ -14,7 +12,7 @@ public class Program {
 
 	public static void main(String[] args) {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Connection conn = null;
 		PreparedStatement st = null;
 		
@@ -22,6 +20,7 @@ public class Program {
 			//estabelecendo a conexão
 			conn = DB.getConnection();
 			
+			/*
 			// criando o statment utiliando o placehoder para cada coluna a ser preenchida
 			st = conn.prepareStatement(
 					"INSERT INTO seller "
@@ -37,6 +36,11 @@ public class Program {
 			st.setDate(3, new java.sql.Date(sdf.parse("22/04/1985").getTime())); // por se tratar de consulta no banco e para não geração confusão nos importes foi utilizado nome qualificade da biblioteca Date que deve ser do pacote slq
 			st.setDouble(4, 3000.0);
 			st.setInt(5, 4);
+			*/
+			
+			st = conn.prepareStatement(
+					"insert into department (Name) values ('D1'), ('D2')"
+					, Statement.RETURN_GENERATED_KEYS);
 			
 			int rowsAffected = st.executeUpdate();
 			
@@ -53,8 +57,6 @@ public class Program {
 			}		
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
 			e.printStackTrace();
 		} finally {
 			DB.closeStatement(st);
